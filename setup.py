@@ -4,7 +4,7 @@ import pages
 
 
 def get_requirements():
-    reqs_file = "requirements.txt"
+    reqs_file = "requirements/requirements.txt"
     try:
         with open(reqs_file) as reqs_file:
             reqs = filter(None, imap(lambda line: line.strip(), reqs_file))
@@ -18,9 +18,11 @@ setup(
     version=pages.__version__,
     author='valerio morsella',
     author_email='valerio.morsella@skyscanner.net',
-    packages=find_packages(exclude=["test*"]),
-    description="Python library for easy creation of readable and reliable page objects for UI tests.",
-    long_description=open('./README.md').read(),
+    url='https://github.com/Skyscanner/pages',
+    license='ASL v.2.0',
+    packages=find_packages(exclude=["test*", "samples"]),
+    description="pages is a lightweight page object and component Python library for UI tests",
+    long_description=open('./README.rst').read(),
     install_requires=get_requirements(),
     test_suite="test"
 )

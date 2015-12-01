@@ -9,14 +9,33 @@ function find_script_path() {
     project_root=${PROG_DIR}/..
 }
 
+function check_outcome() {
+    if [ "$?" != "0" ]; then
+        echo $1
+        exit 1
+    fi
+}
+
 find_script_path
 cd ${project_root}
+
+pip install --upgrade pip
+
+echo "installing requirements"
+pip install -r ./requirements/requirements.txt --upgrade
+pip install -r ./requirements/requirements-ci.txt --upgrade
+
 # lint and pep8 check
 echo "flake8"
 flake8
+
+check_outcome "flake8 failure. quitting."
 #
 echo "coverage run --source=pages ./setup.py test"
 coverage run --source=pages ./setup.py test
+
+check_outcome "tests failed. quitting."
+
 #
 echo "coverage html"
 coverage html

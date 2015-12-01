@@ -85,9 +85,9 @@ class TableTest(unittest.TestCase):
         self.driver.set_expected_command(Command.GET_ELEMENT_TEXT, {'sessionId': self.driver.session_id,
                                                                     'id': self.driver.get_id_for_stored_element(
                                                                         [By.XPATH, './/tr'], 4)})
-
         #
         items = Table(self.driver, 'table', [By.XPATH, './/tr'], Item, 'item', [By.ID, 'table']).get_items()
+        #
         labels = [i.get_text() for i in items]
 
         assert_that(labels, equal_to(['first', 'second', 'third', 'fourth']),

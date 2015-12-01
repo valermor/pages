@@ -1,0 +1,5 @@
+pyhamcrest
+coverage
+flake8
+pep8==1.5.7
+python-coveralls

@@ -4,7 +4,7 @@ We are glad you want to make a contribution.
 Fork this repository and send in a pull request when you are finished with your changes. Link any relevant issues in too.
 
 Before you create a pull request, please review the following points:
-* No pep8 errors/warning are introduced - run flake8 to find out.
+* No pep8 warning are introduced - run flake8 to find out.
 * Unit test coverage should never go down - if unsure on how to add/change existing unit tests, reach out for help.
 * New additions need explanations in details. Update README, have it proof-read and add usage examples under the sample folder.
 * Changes to the existing repo should keep the existing styling conventions: the whole code should read as if it was written by the same author.

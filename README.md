@@ -1,6 +1,12 @@
 pages
 ===================================================
 
+[![Build Status](https://travis-ci.org/Skyscanner/pages.svg)](https://travis-ci.org/Skyscanner/pages)
+[![Coverage Status](https://coveralls.io/repos/Skyscanner/pages/badge.svg?branch=master&service=github)](https://coveralls.io/github/Skyscanner/pages?branch=master)
+[![PyPI](https://img.shields.io/pypi/v/pages.svg)](https://pypi.python.org/pypi/pages)
+[![PyPI](https://img.shields.io/pypi/wheel/pages.svg)](https://img.shields.io/pypi/wheel/pages.svg)
+[![PyPI](https://img.shields.io/pypi/dm/pages.svg)](https://pypi.python.org/pypi/pages)
+
 *pages* is a lightweight Python library which helps create readable and reliable page/component objects for UI tests.
 
 It has been designed to eliminate once and for all false negatives from your builds due to timing issues.
@@ -21,11 +27,11 @@ _pages_ offers a simple but effective framework to build robust page objects for
 The design revolves around the three key concepts:
 * Page class
 * page traits
-* UIComponent
+* UIComponent class
 
 As usual the best way to learn how to use it is to start from coding.
 
-# Example
+## Example
 We want to create UI tests for this page http://the-internet.herokuapp.com/login.
 
 This is a login page that, on successful authentication takes to a secure area page. We want to write a test that loads the login page and execute authentication. We will create two page objects. All the examples are in the [samples](https://github.com/Skyscanner/pages/tree/master/samples) folder.
@@ -220,6 +226,17 @@ class SamplePage(Page):
         return [i for i in table_raws[0].values()]
 ```
 
-One thing to notice here is that the table object is created afresh every time the read\_first\_table\_raw is called. While this makes sense in most cases as the content of the page may change dynamically after loading (this is often the case for tables), in this case inspection of the Table class tells us that calling \_\_init\_\_() does not result in any WebDriver operation. The only moment when we locate elements on the DOM is when we call get\_items(). 
+One thing to notice here is that the table object is created afresh every time read\_first\_table\_raw() is called. While this makes sense in most cases as the content of the page may change dynamically after loading (this is often the case for tables), in this case inspection of the Table class tells us that calling \_\_init\_\_() does not result in any WebDriver operation. The only moment when we locate elements on the DOM is when we call get\_items(). 
 
-This is the other key concept of _pages_: by using UIComponent, we can build components that instantiate WebElement only when we need to use them. This eliminates the possibility of StaleElementReferenceException to be raised during the execution.
+This is the other key-concept of _pages_: by using UIComponent, we can build components that instantiate WebElement only when we need to use them. This eliminates the possibility of StaleElementReferenceException to be raised during the execution.
+
+# Distributing pages
+_pages_ is distributed on PyPI.
+
+## Instructions
+* Ensure .pypirc is present.
+* Update __version__ under pages/\_\_init\_\_.py.
+* Run _distribute.sh_ under the _script_ folder.
+
+# License
+_pages_ is licensed under the Apache Software License 2.0 provision.
