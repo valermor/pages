@@ -33,7 +33,7 @@ class DropdownTest(unittest.TestCase):
         self.driver = MockedWebDriver()
 
     def setUp(self):
-        self.driver.reset_canned_elements()
+        self.driver.reset_dom_elements()
 
     def test_dropdown_executes_select_option_by_name(self):
         self.driver.set_dom_elements([[By.ID, 'dropdownlocator'], [By.XPATH, "./option[text()='thename']"]])

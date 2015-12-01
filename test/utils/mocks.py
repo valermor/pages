@@ -21,7 +21,6 @@ from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
-
 DEFAULT_VALUE_PREFIX = '0.253985061310'
 
 
@@ -30,7 +29,7 @@ class MockedRemoteConnection(object):
         self.expected_commands = []
         self.session_id = random.randint(1, 10000)
         self.element_prefix = u''
-        self.canned_elements = []
+        self.dom_elements = []
 
     def execute(self, command, params):
         for expected_command in self.expected_commands:
@@ -43,14 +42,14 @@ class MockedRemoteConnection(object):
 
         if command == Command.FIND_CHILD_ELEMENTS or command == Command.FIND_ELEMENTS:
             return_value = []
-            for element in self.canned_elements:
+            for element in self.dom_elements:
                 if element['locator'][0] == params['using'] and element['locator'][1] == params['value'] \
                         and self.get_element_value_from_locator(element['parent']) == params['id']:
                     return_value.append({'ELEMENT': element['value']})
             return {'success': 0, 'value': return_value, 'sessionId': self.session_id}
 
         if command == Command.FIND_CHILD_ELEMENT or command == Command.FIND_ELEMENT:
-            for element in self.canned_elements:
+            for element in self.dom_elements:
                 if element['locator'][0] == params['using'] and element['locator'][1] == params['value']:
                     return {'success': 0, 'value': {'ELEMENT': element['value']}, 'sessionId': self.session_id}
 
@@ -70,7 +69,7 @@ class MockedRemoteConnection(object):
             return {'success': 0, 'value': attributes_dict, 'sessionId': self.session_id}
 
         if command == Command.GET_ACTIVE_ELEMENT:
-            return {'success': 0, 'value': {'ELEMENT': self.canned_elements[0]['value']}, 'sessionId': self.session_id}
+            return {'success': 0, 'value': {'ELEMENT': self.dom_elements[0]['value']}, 'sessionId': self.session_id}
         if command == Command.SEND_KEYS_TO_ELEMENT:
             return {'success': 0, 'value': None, 'sessionId': self.session_id}
 
@@ -83,15 +82,15 @@ class MockedRemoteConnection(object):
     def set_element_prefix(self, prefix):
         self.element_prefix = prefix
 
-    def set_canned_element(self, locator, value, parent_id=None, return_values=None):
-        self.canned_elements.append({'locator': locator, 'value': value, 'parent': parent_id, 'return': return_values})
+    def set_dom_element(self, locator, value, parent_id=None, return_values=None):
+        self.dom_elements.append({'locator': locator, 'value': value, 'parent': parent_id, 'return': return_values})
 
-    def reset_canned_elements(self):
-        self.canned_elements = []
+    def reset_dom_elements(self):
+        self.dom_elements = []
 
     def get_element_value_from_locator(self, locator, position=1):
         return_elements = []
-        for element in self.canned_elements:
+        for element in self.dom_elements:
             if element['locator'][0] == locator[0] and element['locator'][1] == locator[1]:
                 return_elements.append(element['value'])
         if len(return_elements) > 0:
@@ -100,7 +99,7 @@ class MockedRemoteConnection(object):
             return ValueError('found no element with locator {0}'.format(locator))
 
     def get_element_from_value(self, value):
-        for element in self.canned_elements:
+        for element in self.dom_elements:
             if element['value'] == value:
                 return element
 
@@ -127,30 +126,30 @@ class MockedWebDriver(WebDriver):
     def set_element_prefix(self, prefix):
         self.command_executor.set_element_prefix(prefix)
 
-    def set_dom_elements(self, canned_elements):
+    def set_dom_elements(self, elements):
         """
-        Generates artificially ids to be returned by the mocked driver.
-        Given canned elements are those element we expect to locate in the tests.
+        Generates ids to be returned by the mocked driver.
+        Given elements are those element we expect to locate in the tests.
         """
-        for element in canned_elements:
-            self.command_executor.set_canned_element(element, generate_value())
+        for element in elements:
+            self.command_executor.set_dom_element(element, generate_value())
 
     def set_dom_element(self, locator, parent_id=None, children=0, return_values=None):
         if not parent_id and return_values:
-            self.command_executor.set_canned_element(locator, generate_value(), return_values=return_values[0])
+            self.command_executor.set_dom_element(locator, generate_value(), return_values=return_values[0])
         elif not parent_id and not return_values:
-            self.command_executor.set_canned_element(locator, generate_value())
+            self.command_executor.set_dom_element(locator, generate_value())
         else:
             if return_values and not isinstance(return_values, list):
                 raise ValueError('return values should be a list')
             for i in range(0, children):
                 if return_values:
-                    self.command_executor.set_canned_element(locator, generate_value(), parent_id, return_values[i])
+                    self.command_executor.set_dom_element(locator, generate_value(), parent_id, return_values[i])
                 else:
-                    self.command_executor.set_canned_element(locator, generate_value(), parent_id)
+                    self.command_executor.set_dom_element(locator, generate_value(), parent_id)
 
-    def reset_canned_elements(self):
-        self.command_executor.reset_canned_elements()
+    def reset_dom_elements(self):
+        self.command_executor.reset_dom_elements()
 
     def get_id_for_stored_element(self, locator, position=1):
         """
@@ -175,5 +174,6 @@ class MockedWebElement(WebElement):
 
 
 def generate_value():
-    random.seed(time.clock())
+    time.sleep(0.2)  # hacky trick to delay generation of random value.
+    random.seed(time.time())
     return unicode(DEFAULT_VALUE_PREFIX + str(random.randint(0, 100)))

@@ -18,7 +18,6 @@ setup(
     version=pages.__version__,
     author='valerio morsella',
     author_email='valerio.morsella@skyscanner.net',
-    package_data={'pages': ['core/logs/*.config']},
     packages=find_packages(exclude=["test*"]),
     description="Python library for easy creation of readable and reliable page objects for UI tests.",
     long_description=open('./README.md').read(),

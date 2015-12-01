@@ -17,9 +17,6 @@ However, reliability of tests is normally a _design problem_.
 
 _pages_ offers a simple but effective framework to build robust page objects for UI tests.
 
-# OUR EXPERIENCE
-Our UI tests at Skyscanner never fail for a timing issue, they are readable and easy to maintain.
-
 # Design
 The design revolves around the three key concepts:
 * Page class
@@ -31,7 +28,7 @@ As usual the best way to learn how to use it is to start from coding.
 # Example
 We want to create UI tests for this page http://the-internet.herokuapp.com/login.
 
-This is a login page that, on successful authentication takes to a secure area page. We want to write a test that loads the login page and execute authentication. We will create two page objects. All the examples are in the samples folder.
+This is a login page that, on successful authentication takes to a secure area page. We want to write a test that loads the login page and execute authentication. We will create two page objects. All the examples are in the [samples](https://github.com/Skyscanner/pages/tree/master/samples) folder.
 
 ### First step - test container
 As a first step, we will create a container where we instantiate the driver.
@@ -115,7 +112,7 @@ On successful login, secure area page should be returned. This is done in the lo
 
 ### Sixt step - Secure Area Page
 Finally, we need to implement the return page. Similarly to the login page:
-```
+```python
 class SecureAreaPage(Page):
 
     def __init__(self, driver):
@@ -161,7 +158,7 @@ An example of this is the Table class.
 ### Example
 We want to build a model of the table at this address http://the-internet.herokuapp.com/challenging_dom.
 We will build a component class that allows interaction with the table. In particular, we want to test that elements in the first row of the table match the expected values.
-The complete example code can be found under the _sample_ folder.
+The complete example code can be found under the [sample](https://github.com/Skyscanner/pages/tree/master/samples) folder.
 
 Again we will build the test top-down.
 ```python

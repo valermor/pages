@@ -54,7 +54,7 @@ class UiComponentTest(unittest.TestCase):
         self.driver.set_dom_element([By.ID, 'theid'])
         element_first_time = component.cache().locate()
         ##
-        self.driver.reset_canned_elements()
+        self.driver.reset_dom_elements()
         self.driver.set_dom_element([By.ID, 'theid'])
         element_second_time = component.locate()
         ##
@@ -66,7 +66,7 @@ class UiComponentTest(unittest.TestCase):
         self.driver.set_dom_element([By.ID, 'theid'])
         element_first_time = component.locate()
         ##
-        self.driver.reset_canned_elements()
+        self.driver.reset_dom_elements()
         self.driver.set_dom_element([By.ID, 'theid'])
         element_second_time = component.locate()
         ##

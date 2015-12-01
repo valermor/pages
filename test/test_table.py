@@ -35,7 +35,7 @@ class TableTest(unittest.TestCase):
         self.driver = MockedWebDriver()
 
     def setUp(self):
-        self.driver.reset_canned_elements()
+        self.driver.reset_dom_elements()
 
     def test_get_items_with_language(self):
         self.driver.set_dom_element([By.ID, 'table'])
