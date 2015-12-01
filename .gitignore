@@ -1,0 +1,5 @@
+.coverage
+.eggs
+htmlcov
+*.egg-info
+.idea
