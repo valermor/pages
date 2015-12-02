@@ -6,8 +6,8 @@ pages
 *pages* is a lightweight Python library which helps in the creation of
 readable and reliable page/component objects for UI tests.
 
-It has been designed to eliminate from your builds, once and for all,
-false negatives caused by timing issues.
+It's been designed to ensure that timing issues will have zero impact
+on your test results.
 
 It is a wrapper around the Python WebDriver bindings, but the same ideas
 (components, traits, ...) could be adapted to any other driver technology - 
