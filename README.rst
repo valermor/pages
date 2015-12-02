@@ -7,17 +7,17 @@ pages
 readable and reliable page/component objects for UI tests.
 
 It has been designed to eliminate from your builds, once and for all,
-false negatives due to timing issues.
+false negatives caused by timing issues.
 
 It is a wrapper around the Python WebDriver bindings, but the same ideas
-(components, traits,...) could be adapted to any other driver technology - 
+(components, traits, ...) could be adapted to any other driver technology - 
 including mobile.
 
 Introduction
 ============
 
 The most common problem when introducing automated UI-based testing in
-continuous integration is the tests' brittle nature. A false negative in a CI
+continuous integration is the brittle nature of the tests. A false negative in a CI
 pipeline is often cause of stress, fierce discussions (slip the build
 through vs. hold it on failure analysis) and in some cases radical
 changes of test strategies. However, the value of reliable UI tests is
@@ -93,12 +93,12 @@ loaded. In code this becomes:
             assert_that(secure_area_page, is_loaded().with_timeout(PAGE_LOADING_TIMEOUT)
                         .with_polling(POLLING_INTERVAL))
 
-Notice how LoginPage needs only a reference to the driver that we have
+Notice how the LoginPage needs only a reference to the driver that we have
 created in the setUp. We know the API already, so we are adding method
 calls to load() and wait\_until\_loaded(). However, this will be
 explained in the next steps.
 
-Third step - loading Login page
+Third step - loading the Login page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Login page will extend the Page base class from our framework. One
@@ -120,10 +120,10 @@ instance of the class.
 Fourth step - adding traits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*Traits* are the condition that have to be verified for the page to be
+*Traits* are the conditions that have to be verified for the page to be
 in the loaded state. In our case, the page has user text input, password
-text input and submit button since we are going to interact with them.
-We start by defining three private methods which check the presence of
+text input and submit button, since those are the elements we are going to interact with.
+We'll start by defining three private methods to check the presence of
 those elements.
 
 .. code:: python
@@ -137,8 +137,8 @@ those elements.
         def _has_submit_button(self):
             return Button(self.driver, 'submit', [By.XPATH, "//button[@type = 'submit']"]).is_present()
 
-We can now add *traits* to the page under test. We are going to add them
-in the \_\_init\_\_().
+We can now add *traits* to the page under test. Let's add them to
+the \_\_init\_\_().
 
 .. code:: python
 
@@ -156,10 +156,9 @@ trait, used for logging.
 Finally, notice how the three traits we chose are the elements that
 need to be ready for the interactions we are going to have with the
 page. While these three traits are verified, other parts of the page may
-still be loading. For the safety of the test, in general this shouldn't
-be a problem. However, great care should always be taken to select
-proper traits so that tests do not interact with parts of the DOM which
-have not finished loading.
+still be loading. While this shouldn't be a problem for the safety of this test,
+in general great care should be taken to select traits so that tests do not interact
+with parts of the DOM which have not finished loading.
 
 Fifth step - logging in and returning secure area page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -197,14 +196,17 @@ page:
             return Button(self.driver, [By.XPATH, "//button[@href='/logout']"]).is_present()
 
 Notice how we did not implement load(), since the secure area page is not
-loadable from URL.
+loadable from a URL.
 
 Page objects
 ------------
 
 In the previous example, we have seen how simple it is to implement page
-objects and create tests with them. In essence, all we need to do is: \*
-extend Page class \* implement load method \* add traits to the page
+objects and create tests with them. In essence, all we need to do is: 
+
+* extend the Page class
+* implement the load() method
+* add traits to the page
 
 As a final (golden) rule, every method which models a user interaction
 and results in a page load has to return a page object of the target page.
@@ -239,7 +241,7 @@ WebElement.
 
 In the example above, the InputText and Button classes extend UIComponent.
 
-In general, a UIComponent represent any portion of the DOM. It is
+In general, a UIComponent may represent any portion of the DOM. It is
 important to notice that a UIComponent can contain another UIComponent. An
 example of this is the Table class.
 
@@ -274,8 +276,8 @@ Again, we will build the test top-down.
 
             assert_that(first_table_raw_values, equal_to(EXPECTED_LABEL_LIST))
 
-SamplePage is a page object class which contains a table as component.
-We can start from writing the table. The Table class (available in
+SamplePage is a page object class which contains a table as a component.
+We can start by writing the table. The Table class (available in
 pages.standard\_components) makes this simple.
 
 .. code:: python
@@ -286,8 +288,8 @@ pages.standard\_components) makes this simple.
             super(SampleTable, self).__init__(driver, 'sample table', [By.XPATH, './tbody/tr'], TableRow, 'raw',
                                               [By.XPATH, '//table'])
 
-SampleTable extends Table which in turn is also extending UIComponent.
-Moreover, when calling the super method, we define also TableRow as a
+SampleTable extends Table which in turn extends UIComponent.
+Moreover, when calling the super() method, we define TableRow as a
 component representing a single row.
 
 .. code:: python
@@ -302,9 +304,9 @@ component representing a single row.
 
 TableRow extends UIComponent and defines methods to access elements
 in the row. The main problem has been split into smaller ones, and
-we have written a very little amount of code.
+we have written a very small amount of code.
 
-Finally, we can define the SamplePage.
+Finally, we can define SamplePage.
 
 .. code:: python
 
@@ -331,8 +333,8 @@ any WebDriver operation. The only moment when we locate elements on the
 DOM is when we call get\_items().
 
 This is the other key-concept of *pages*: by using UIComponent, we can
-build components that instantiate WebElement only when we need to use
-them. This eliminates the possibility of StaleElementReferenceException
+build components that instantiate a WebElement only when we need to use
+it. This eliminates the possibility of StaleElementReferenceException(s)
 to be raised during the execution.
 
 Distributing pages
