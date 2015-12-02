@@ -3,26 +3,26 @@ pages
 
 |Build Status| |Coverage Status| |PyPI1| |PyPI2| |PyPI3|
 
-*pages* is a lightweight Python library which helps create readable and
-reliable page/component objects for UI tests.
+*pages* is a lightweight Python library which helps in the creation of
+readable and reliable page/component objects for UI tests.
 
-It has been designed to eliminate once and for all false negatives from
-your builds due to timing issues.
+It has been designed to eliminate from your builds, once and for all,
+false negatives due to timing issues.
 
-It is a wrapper around the Python WebDriver bindings but the same ideas
-(components, traits,...) could be adapted to any other driver technology
+It is a wrapper around the Python WebDriver bindings, but the same ideas
+(components, traits,...) could be adapted to any other driver technology - 
 including mobile.
 
 Introduction
 ============
 
 The most common problem when introducing automated UI-based testing in
-continuous integration is their brittle nature. A false negative in a CI
+continuous integration is the tests' brittle nature. A false negative in a CI
 pipeline is often cause of stress, fierce discussions (slip the build
-through vs. hold builds on failure analysis) and in some cases radical
+through vs. hold it on failure analysis) and in some cases radical
 changes of test strategies. However, the value of reliable UI tests is
-undeniable as they are the closest thing to the real usage of a product.
-Moreover, they exercise the stack from the frontend representing a way
+undeniable, as they are the closest thing to real usage of a product.
+Moreover, they exercise the stack from the frontend, thus representing a way
 to test integration of the whole system. This is why automated UI tests
 sit at the top of the well-known test pyramid: they are seen as
 difficult to implement and expensive to maintain.
@@ -35,23 +35,23 @@ objects for UI tests.
 Design
 ======
 
-The design revolves around the three key concepts:
+The design revolves around three key concepts:
 
 -  the `Page <https://github.com/Skyscanner/pages/blob/master/pages/page.py>`_ class
 -  page `traits <https://github.com/Skyscanner/pages/blob/master/pages/traits.py>`_
 -  the `UIComponent <https://github.com/Skyscanner/pages/blob/master/pages/ui_component.py,>`_ class
 
-As usual, the best way to learn how to use it is to start from coding.
+As usual, the best way to learn how to use it is to start coding.
 
 Example
 -------
 
-We want to create UI tests for this page
+We want to create UI tests for this page:
 http://the-internet.herokuapp.com/login.
 
-This is a login page that, on successful authentication takes to a
+This is a login page that, on successful authentication, takes to a
 secure area page. We want to write a test that loads the login page and
-execute authentication. We will create two page objects. All the
+executes authentication. We will create two page objects. All the
 examples are in the
 `samples <https://github.com/Skyscanner/pages/tree/master/samples>`__
 folder.
@@ -76,7 +76,7 @@ Second step - test implementation top-down
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Load the page, enter credentials and assert that the secure area page is
-loaded. In code this becomes.
+loaded. In code this becomes:
 
 .. code:: python
 
@@ -93,15 +93,15 @@ loaded. In code this becomes.
             assert_that(secure_area_page, is_loaded().with_timeout(PAGE_LOADING_TIMEOUT)
                         .with_polling(POLLING_INTERVAL))
 
-Notice LoginPage needs only a reference to the driver that we have
-created in the setUp. We know already the API, so we are adding methods
-call to load() and wait\_until\_loaded(). However, this will be
+Notice how LoginPage needs only a reference to the driver that we have
+created in the setUp. We know the API already, so we are adding method
+calls to load() and wait\_until\_loaded(). However, this will be
 explained in the next steps.
 
 Third step - loading Login page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Login page will extend Page base class from our framework. One
+The Login page will extend the Page base class from our framework. One
 requirement is that load(), which is abstract, has to be defined.
 Moreover, since we are chaining other methods, load() has to return an
 instance of the class.
@@ -123,7 +123,7 @@ Fourth step - adding traits
 *Traits* are the condition that have to be verified for the page to be
 in the loaded state. In our case, the page has user text input, password
 text input and submit button since we are going to interact with them.
-We start defining three private methods which check the presence of
+We start by defining three private methods which check the presence of
 those elements.
 
 .. code:: python
@@ -149,23 +149,23 @@ in the \_\_init\_\_().
             self.add_trait(self._has_submit_button, 'has submit button')
 
 Notice how add\_trait() takes as first parameter the method name. In
-other words, it accepts only a callable. You may pass a lambda for
-instance to it. The second parameter is the short description of the
-trait which is used for logging.
+other words, it accepts only a callable. For instance, you may pass
+a lambda to it. The second parameter is the short description of the
+trait, used for logging.
 
-Finally, notice we have chosen three traits which are the elements that
+Finally, notice how the three traits we chose are the elements that
 need to be ready for the interactions we are going to have with the
 page. While these three traits are verified, other parts of the page may
-still be loading. For the safeness of the test, this in general should
-not be a problem. However, great care should always be taken to select
+still be loading. For the safety of the test, in general this shouldn't
+be a problem. However, great care should always be taken to select
 proper traits so that tests do not interact with parts of the DOM which
 have not finished loading.
 
 Fifth step - logging in and returning secure area page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On successful login, secure area page should be returned. This is done
-in the login\_user() method. Notice we have refactored some of the
+On successful login, the secure area page should be returned. This is done
+in the login\_user() method. Notice that we have refactored some of the
 previous code for better reuse.
 
 .. code:: python
@@ -176,7 +176,7 @@ previous code for better reuse.
             self._submit_button().click()
             return SecureAreaPage(self.driver)
 
-Sixt step - Secure Area Page
+Sixth step - Secure Area Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finally, we need to implement the return page. Similarly to the login
@@ -196,24 +196,23 @@ page:
         def _has_logout_button(self):
             return Button(self.driver, [By.XPATH, "//button[@href='/logout']"]).is_present()
 
-Notice how we did not implement load() since secure area page is not
+Notice how we did not implement load(), since the secure area page is not
 loadable from URL.
 
 Page objects
 ------------
 
-In the previous example, we have seen how simple is to implement page
+In the previous example, we have seen how simple it is to implement page
 objects and create tests with them. In essence, all we need to do is: \*
 extend Page class \* implement load method \* add traits to the page
 
-As final golden rule, every method which models a user interaction
-results in a page load has to return a page object of the target page.
-Simplest case is load() itself.
+As a final (golden) rule, every method which models a user interaction
+and results in a page load has to return a page object of the target page.
+The simplest case is load() itself.
 
 The benefit of building a page from the Page class is that, after proper
-definition of traits, we can rely on wait\_until\_loaded() which will
-reliably pause the test execution *just enough* to allow the page to
-load.
+definition of traits, we can rely on wait\_until\_loaded() to reliably
+pause the test execution *just enough* to allow the page to load.
 
 .. code:: python
 
@@ -225,29 +224,29 @@ Page traits
 Disclaimer: Traits we define here are not "class traits".
 
 *A Trait is an abstraction of the condition that must be verified for an
-element to be ready.* Adding traits is extremely simple as shown in the
-example above. The most important reason why traits were introduced is
-because through them it is easy to nail down which conditions have
+element to be ready.* As shown in the example above, adding traits is
+extremely simple. The most important reason we introduced traits is
+that they make it easy to nail down which conditions have
 failed on page load.
 
 UIComponents
 ------------
 
-UIComponent class is the basic element we use to build our page models.
-Anything that is part of a web page can be modelled as a UIComponent.
-The responsibility of this class is provide the lazy creation of a
+The UIComponent class is the basic element we use to build our page models.
+Anything that is part of a web page can be modeled as a UIComponent.
+The responsibility of this class is to ensure lazy creation of a
 WebElement.
 
-In the example above, InputText and Button classes extend UIComponent.
+In the example above, the InputText and Button classes extend UIComponent.
 
-More in general, a UIComponent, represent any portion of the DOM. It is
-important to notice that a UIComponent can contain other UIComponent. An
+In general, a UIComponent represent any portion of the DOM. It is
+important to notice that a UIComponent can contain another UIComponent. An
 example of this is the Table class.
 
 Example
 ~~~~~~~
 
-We want to build a model of the table at this address
+We want to build a model of the table at this address:
 http://the-internet.herokuapp.com/challenging\_dom. We will build a
 component class that allows interaction with the table. In particular,
 we want to test that elements in the first row of the table match the
@@ -255,7 +254,7 @@ expected values. The complete example code can be found under the
 `sample <https://github.com/Skyscanner/pages/tree/master/samples>`__
 folder.
 
-Again we will build the test top-down.
+Again, we will build the test top-down.
 
 .. code:: python
 
@@ -276,8 +275,8 @@ Again we will build the test top-down.
             assert_that(first_table_raw_values, equal_to(EXPECTED_LABEL_LIST))
 
 SamplePage is a page object class which contains a table as component.
-We can start from writing the table. Using the Table class (available in
-pages.standard\_components) this becomes simple.
+We can start from writing the table. The Table class (available in
+pages.standard\_components) makes this simple.
 
 .. code:: python
 
@@ -288,8 +287,8 @@ pages.standard\_components) this becomes simple.
                                               [By.XPATH, '//table'])
 
 SampleTable extends Table which in turn is also extending UIComponent.
-Moreover, when calling the super method, we define also TableRow as the
-component of the single row.
+Moreover, when calling the super method, we define also TableRow as a
+component representing a single row.
 
 .. code:: python
 
@@ -301,9 +300,9 @@ component of the single row.
         def values(self):
             return [i.text for i in self.locate().find_elements_by_xpath('./td')]
 
-TableRow extends UIComponent and defines methods for accessing element
-in the row. This way we have split the problem into smaller ones and
-written very little amount code.
+TableRow extends UIComponent and defines methods to access elements
+in the row. The main problem has been split into smaller ones, and
+we have written a very little amount of code.
 
 Finally, we can define the SamplePage.
 
@@ -325,7 +324,7 @@ Finally, we can define the SamplePage.
 
 One thing to notice here is that the table object is created afresh
 every time read\_first\_table\_raw() is called. While this makes sense
-in most cases as the content of the page may change dynamically after
+in most cases, as the content of the page may change dynamically after
 loading (this is often the case for tables), in this case inspection of
 the Table class tells us that calling \_\_init\_\_() does not result in
 any WebDriver operation. The only moment when we locate elements on the
