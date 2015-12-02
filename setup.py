@@ -24,5 +24,10 @@ setup(
     description="pages is a lightweight page object and component Python library for UI tests",
     long_description=open('./README.rst').read(),
     install_requires=get_requirements(),
-    test_suite="test"
+    test_suite="test",
+    classifiers=["Development Status :: 5 - Production/Stable",
+                 "Intended Audience :: Developers",
+                 "Programming Language :: Python :: 2.7",
+                 "Topic :: Software Development :: Libraries :: Python Modules",
+                 "Topic :: Software Development :: Testing"]
 )

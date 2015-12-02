@@ -29,12 +29,7 @@ fi
 pip install --upgrade pip
 
 echo "installing requirements"
-#pip install -r ./requirements/requirements.txt --upgrade
-#pip install -r ./requirements/requirements-ci.txt --upgrade
 pip install -r ./requirements/requirements-dist.txt --upgrade
-
-echo "generating README.rst"
-pandoc --from=markdown --to=rst --output=README.rst README.md
 
 echo "running tests"
 ./scripts/test.sh
