@@ -35,10 +35,13 @@ objects for UI tests.
 Design
 ======
 
-The design revolves around the three key concepts: \* Page class \* page
-traits \* UIComponent class
+The design revolves around the three key concepts:
 
-As usual the best way to learn how to use it is to start from coding.
+-  the `Page <https://github.com/Skyscanner/pages/blob/master/pages/page.py>`_ class
+-  page `traits <https://github.com/Skyscanner/pages/blob/master/pages/traits.py>`_
+-  the `UIComponent <https://github.com/Skyscanner/pages/blob/master/pages/ui_component.py,>`_ class
+
+As usual, the best way to learn how to use it is to start from coding.
 
 Example
 -------
@@ -310,7 +313,7 @@ Finally, we can define the SamplePage.
 
         def __init__(self, driver):
             Page.__init__(self, driver, 'sample page')
-            self.add_trait(lambda: SampleTable(self.driver).is_present(), 'has table')
+            self.add_trait(lambda: SampleTable(self.driver).is_present, 'has table')
 
         def load(self):
             self.driver.get('http://the-internet.herokuapp.com/challenging_dom')
