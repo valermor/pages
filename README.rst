@@ -1,7 +1,7 @@
 pages
 =====
 
-|Build Status| |Coverage Status| |PyPI1| |PyPI2| |PyPI3|
+|BuildStatus| |CoverageStatus| |PyPI1| |PyPI2| |PyPI3|
 
 *pages* is a lightweight Python library which helps create readable and
 reliable page/component objects for UI tests.
@@ -39,7 +39,7 @@ The design revolves around the three key concepts:
 
 -  the `Page <https://github.com/Skyscanner/pages/blob/master/pages/page.py>`_ class
 -  page `traits <https://github.com/Skyscanner/pages/blob/master/pages/traits.py>`_
--  the `UIComponent <https://github.com/Skyscanner/pages/blob/master/pages/ui_component.py,>`_ class
+-  the `UIComponent <https://github.com/Skyscanner/pages/blob/master/pages/ui_component.py>`_ class
 
 As usual, the best way to learn how to use it is to start from coding.
 
@@ -353,9 +353,9 @@ License
 
 *pages* is licensed under the Apache Software License 2.0 provision.
 
-.. |Build Status| image:: https://travis-ci.org/Skyscanner/pages.svg
+.. |BuildStatus| image:: https://travis-ci.org/Skyscanner/pages.svg
    :target: https://travis-ci.org/Skyscanner/pages
-.. |Coverage Status| image:: https://coveralls.io/repos/Skyscanner/pages/badge.svg?branch=master&service=github
+.. |CoverageStatus| image:: https://coveralls.io/repos/Skyscanner/pages/badge.svg?branch=master&service=github
    :target: https://coveralls.io/github/Skyscanner/pages?branch=master
 .. |PyPI1| image:: https://img.shields.io/pypi/v/pages.svg
    :target: https://pypi.python.org/pypi/pages

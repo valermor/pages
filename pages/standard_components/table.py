@@ -31,10 +31,10 @@ class Table(UIComponent, ElementWithLanguage):
         <\tbody>
     <\table>
     How to use it:
-    table = Table(driver, "a table", [By.XPATH, "//table[@class='atable']"]), Item, "an item", [By.XPATH, ".//tr"])
-    table.get_items
+    table = Table(driver, "table", [By.XPATH, ".//tr"], Item, "item", [By.XPATH, "//table[@class='atable']"])
+    table.get_items()
 
-    Notice that with_item takes a subclass of UIComponent
+    Notice Item must be a subclass of UIComponent.
     """
 
     def __init__(self, driver, table_name, item_relative_locator, item_class, item_name, table_locator=None):
