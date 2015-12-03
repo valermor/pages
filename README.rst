@@ -358,9 +358,9 @@ License
    :target: https://travis-ci.org/Skyscanner/pages
 .. |CoverageStatus| image:: https://coveralls.io/repos/Skyscanner/pages/badge.svg?branch=master&service=github
    :target: https://coveralls.io/github/Skyscanner/pages?branch=master
-.. |PyPI1| image:: https://img.shields.io/pypi/v/pages.svg
-   :target: https://pypi.python.org/pypi/pages
-.. |PyPI2| image:: https://img.shields.io/pypi/wheel/pages.svg
-   :target: https://img.shields.io/pypi/wheel/pages.svg
-.. |PyPI3| image:: https://img.shields.io/pypi/dm/pages.svg
-   :target: https://pypi.python.org/pypi/pages
+.. |PyPI1| image:: https://img.shields.io/pypi/v/p-ages.svg
+   :target: https://pypi.python.org/pypi/p-ages
+.. |PyPI2| image:: https://img.shields.io/pypi/wheel/page-s.svg
+   :target: https://img.shields.io/pypi/wheel/p-ages.svg
+.. |PyPI3| image:: https://img.shields.io/pypi/dm/page-s.svg
+   :target: https://pypi.python.org/pypi/p-ages

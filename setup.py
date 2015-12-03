@@ -14,7 +14,7 @@ def get_requirements():
     return []
 
 setup(
-    name='pages',
+    name='p-ages',
     version=pages.__version__,
     author='valerio morsella',
     author_email='valerio.morsella@skyscanner.net',
