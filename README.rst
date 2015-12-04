@@ -6,7 +6,7 @@ pages
 *pages* is a lightweight Python library which helps in the creation of
 readable and reliable page/component objects for UI tests.
 
-It's been designed to ensure that timing issues will have zero impact
+It is been designed to ensure that timing issues will have zero impact
 on your test results.
 
 It is a wrapper around the Python WebDriver bindings, but the same ideas
@@ -156,7 +156,7 @@ trait, used for logging.
 Finally, notice how the three traits we chose are the elements that
 need to be ready for the interactions we are going to have with the
 page. While these three traits are verified, other parts of the page may
-still be loading. While this shouldn't be a problem for the safety of this test,
+still be loading. While this should not be a problem for the safety of this test,
 in general great care should be taken to select traits so that tests do not interact
 with parts of the DOM which have not finished loading.
 
