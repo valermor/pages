@@ -95,7 +95,7 @@ class UiComponentTest(unittest.TestCase):
         component.is_present()
 
         assert_that(self.driver.has_fulfilled_expectations(), equal_to(True),
-            "component should be able to locate element it is scope")
+                    "component should be able to locate element it is scope")
 
     def test_component_can_be_clicked(self):
         self.driver.set_dom_element([By.ID, 'an_id'])
