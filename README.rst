@@ -22,7 +22,7 @@ pipeline is often cause of stress, fierce discussions (slip the build
 through vs. hold it on failure analysis) and in some cases radical
 changes of test strategies. However, the value of reliable UI tests is
 undeniable, as they are the closest thing to real usage of a product.
-Moreover, they exercise the stack from the frontend, thus representing a way
+Moreover, they exercise the stack from the front-end, thus representing a way
 to test integration of the whole system. This is why automated UI tests
 sit at the top of the well-known test pyramid: they are seen as
 difficult to implement and expensive to maintain.
@@ -31,6 +31,13 @@ However, reliability of tests is normally a *design problem*.
 
 *pages* offers a simple but effective framework to build robust page
 objects for UI tests.
+
+Installation
+============
+
+.. code:: bash
+
+      pip install p-ages
 
 Design
 ======
@@ -99,7 +106,7 @@ calls to load() and wait\_until\_loaded(). However, this will be
 explained in the next steps.
 
 Third step - loading the Login page
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Login page will extend the Page base class from our framework. One
 requirement is that load(), which is abstract, has to be defined.
@@ -176,7 +183,7 @@ previous code for better reuse.
             return SecureAreaPage(self.driver)
 
 Sixth step - Secure Area Page
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finally, we need to implement the return page. Similarly to the login
 page:
@@ -202,7 +209,7 @@ Page objects
 ------------
 
 In the previous example, we have seen how simple it is to implement page
-objects and create tests with them. In essence, all we need to do is: 
+objects and create tests with them. In essence, all we need to do is:
 
 * extend the Page class
 * implement the load() method
@@ -235,7 +242,7 @@ UIComponents
 ------------
 
 The UIComponent class is the basic element we use to build our page models.
-Anything that is part of a web page can be modeled as a UIComponent.
+Anything that is part of a web page can be modelled as a UIComponent.
 The responsibility of this class is to ensure lazy creation of a
 WebElement.
 
