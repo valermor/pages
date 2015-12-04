@@ -88,6 +88,15 @@ class UiComponentTest(unittest.TestCase):
         assert_that(component.is_found(), equal_to(False),
                     "component should not be found when evaluating traits throws an exception")
 
+    def test_is_present(self):
+        self.driver.set_dom_element([By.ID, 'an_id'])
+        component = UIComponent(self.driver, 'a_component', [By.ID, 'an_id'])
+
+        component.is_present()
+
+        assert_that(self.driver.has_fulfilled_expectations(), equal_to(True),
+            "component should be able to locate element it is scope")
+
     def test_component_can_be_clicked(self):
         self.driver.set_dom_element([By.ID, 'an_id'])
 
