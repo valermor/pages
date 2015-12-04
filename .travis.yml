@@ -10,4 +10,4 @@ script:
 - ./scripts/test.sh
 
 after_success:
-- coveralls
+- coveralls debug
