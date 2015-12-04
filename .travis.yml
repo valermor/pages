@@ -5,9 +5,10 @@ python:
 install:
 - pip install -r requirements/requirements.txt
 - pip install -r requirements/requirements-ci.txt
+- pip install coveralls
 
 script:
 - ./scripts/test.sh
 
 after_success:
-- coveralls debug
+ coveralls
