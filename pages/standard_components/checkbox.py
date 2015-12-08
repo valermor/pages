@@ -22,5 +22,5 @@ class Checkbox(UIComponent):
         UIComponent.__init__(self, driver, name, locator)
 
     def select(self):
-        if self.locate().is_selected() is not True:
+        if not self.locate().is_selected():  # pragma: no cover
             self.locate().click()

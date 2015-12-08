@@ -92,8 +92,8 @@ class UIComponent(ElementWithTraits):
         try:
             self.locate()
             return True
-        except NoSuchElementException:
-            return False
+        except NoSuchElementException:  # pragma: no cover
+            return False  # pragma: no cover
 
     def click(self):
         self.locate().click()

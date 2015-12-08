@@ -321,7 +321,7 @@ Finally, we can define SamplePage.
 
         def __init__(self, driver):
             Page.__init__(self, driver, 'sample page')
-            self.add_trait(lambda: SampleTable(self.driver).is_present, 'has table')
+            self.add_trait(lambda: SampleTable(self.driver).is_present(), 'has table')
 
         def load(self):
             self.driver.get('http://the-internet.herokuapp.com/challenging_dom')

@@ -73,7 +73,7 @@ class Wait(object):
                                                         str(ex)))  # pragma: no cover
             time.sleep(self._poll)
             count += 1
-            if time.time() > end_time:
+            if time.time() > end_time:  # pragma: no cover
                 break
         raise TimeoutException(
             msg="condition <" + condition_description + "> was not true after " + str(self._timeout) + " seconds.")

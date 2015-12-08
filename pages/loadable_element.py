@@ -29,7 +29,7 @@ class LoadableElement(ElementWithTraits):
         ElementWithTraits.__init__(self, name)
         self.driver = driver
 
-    @abstractmethod
+    @abstractmethod  # pragma: no cover
     def load(self):
         """
         Load component through WebDriver API.

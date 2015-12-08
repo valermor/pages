@@ -21,7 +21,7 @@ from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
-DEFAULT_VALUE_PREFIX = '0.253985061310'
+DEFAULT_VALUE_PREFIX = '0.25398506131'
 
 
 class MockedRemoteConnection(object):
@@ -176,4 +176,4 @@ class MockedWebElement(WebElement):
 def generate_value():
     time.sleep(0.2)  # hacky trick to delay generation of random value.
     random.seed(time.time())
-    return unicode(DEFAULT_VALUE_PREFIX + str(random.randint(0, 100)))
+    return unicode(DEFAULT_VALUE_PREFIX + str(random.randint(0, 1000)))

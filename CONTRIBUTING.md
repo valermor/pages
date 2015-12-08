@@ -7,7 +7,7 @@ Before you create a pull request, please review the following points:
 * No pep8 warning are introduced - run flake8 to find out.
 * Unit test coverage should never go down - if unsure on how to add/change existing unit tests, reach out for help.
 * New additions need explanations in details. Update README, have it proof-read and add usage examples under the sample folder.
-* Changes to the existing repo should keep the existing styling conventions: the whole code should read as if it was written by the same author.
+* Changes to the existing repo should keep the existing styling conventions: the whole code should read as if it were written by the same author.
 
 # Issues
 * File the issue and take note of the issue number. 

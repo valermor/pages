@@ -43,10 +43,8 @@ class ElementWithTraits(object):
         return self
 
     def wait_until_loaded(self, timeout=DEFAULT_TIMEOUT, polling_time=DEFAULT_POLLING_TIME):
-        if timeout:
-            self.timeout = timeout
-        if polling_time:
-            self.polling_time = polling_time
+        self.timeout = timeout
+        self.polling_time = polling_time
         wait = Wait(self.timeout, self.polling_time).with_ignored_exceptions(StaleElementReferenceException)
         if len(self.traits) == 0:
             raise IllegalStateException("Element '{0}' has no traits".format(self.name))
