@@ -15,11 +15,9 @@
 ############################################################################
 import unittest
 
-from hamcrest import assert_that, calling, raises, equal_to, ends_with
+from hamcrest import assert_that, calling, raises, ends_with
 
-import pages
-
-from pages.traits import Trait, evaluate_traits
+from pages.traits import Trait
 
 
 class TraitsTest(unittest.TestCase):
@@ -31,25 +29,6 @@ class TraitsTest(unittest.TestCase):
 
     def test_str(self):
         assert_that(a_trait().__str__(), ends_with('always present'))
-
-    def test_lazy_evaluation(self):
-        traits = get_traits_with_lazy_evaluation(True)
-
-        assert_that(evaluate_traits(traits)[0], equal_to('always true #1'))
-
-    def test_eager_evaluation(self):
-        traits = get_traits_with_lazy_evaluation(False)
-
-        assert_that(evaluate_traits(traits)[1], equal_to('always true #2'))
-
-
-def get_traits_with_lazy_evaluation(value):
-        lazy_evaluated_trait = pages.traits
-        lazy_evaluated_trait.__dict__['LAZY_EVALUATION'] = value
-
-        first_trait = lazy_evaluated_trait.Trait(lambda: False, 'always true #1')
-        second_trait = lazy_evaluated_trait.Trait(lambda: False, 'always true #2')
-        return [first_trait, second_trait]
 
 
 def foo():

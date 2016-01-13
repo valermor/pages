@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
-LAZY_EVALUATION = True
 
 
 class Trait(object):
@@ -32,19 +31,3 @@ class Trait(object):
 
     def __str__(self):
         return "condition: " + str(self.condition) + ", " + self.description
-
-
-def evaluate_traits(traits):
-    """
-    Evaluates traits and returns a list containing the description of traits which are not true.
-    Notice that if LAZY_EVALUATION is set to False all traits are evaluated before returning. Use this option
-    only for debugging purposes.
-    """
-    return_value = []
-    for trait in traits:
-        if not trait.condition():
-            if LAZY_EVALUATION:
-                return [trait.description]
-            else:
-                return_value.append(trait.description)
-    return return_value

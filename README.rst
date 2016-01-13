@@ -344,6 +344,20 @@ build components that instantiate a WebElement only when we need to use
 it. This eliminates the possibility of StaleElementReferenceException(s)
 to be raised during the execution.
 
+Logging
+=======
+
+*pages* adds only a NullHandler to the loggers.
+In order to turn on logging generated inside the library you can rely on root logger or set on explicitly.
+To turn on logging from your application code, for instance:
+
+.. code:: python
+logging.getLogger('pages').setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
+
+This will set log level to DEBUG.
+
+
 Distributing pages
 ==================
 

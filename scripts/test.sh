@@ -26,16 +26,16 @@ pip install -r ./requirements/requirements.txt --upgrade
 pip install -r ./requirements/requirements-ci.txt --upgrade
 
 # lint and pep8 check
-echo "flake8"
+echo "running flake8"
 flake8
-
 check_outcome "flake8 failure. quitting."
-#
+
+# unit test + coverage
 echo "coverage run --source=pages ./setup.py test"
 coverage run --source=pages ./setup.py test
 
 check_outcome "tests failed. quitting."
 
-#
+# genrating html report
 echo "coverage html"
 coverage html

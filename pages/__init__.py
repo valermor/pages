@@ -13,4 +13,18 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
-__version__ = "0.1.1"
+
+# This is taken from requests (see https://github.com/kennethreitz/requests/blob/master/requests/__init__.py)
+# Set default logging handler to avoid "No handler found" warnings.
+import logging
+try:  # Python 2.7+
+    from logging import NullHandler
+except ImportError:  # pragma: no cover
+    class NullHandler(logging.Handler):  # pragma: no cover
+        def emit(self, record):  # pragma: no cover
+            pass  # pragma: no cover
+
+logging.getLogger(__name__).addHandler(NullHandler())
+
+# Set the version of the library here.
+__version__ = "0.1.2"

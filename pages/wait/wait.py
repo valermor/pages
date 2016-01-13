@@ -16,13 +16,12 @@
 import logging
 import time
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from pages.traits import evaluate_traits
 
 POLL_FREQUENCY = 0.5
 IGNORED_EXCEPTIONS = [NoSuchElementException]  # list of exceptions ignored during calls to the method
 LAZY_EVALUATION = True  # Determines if traits should be all evaluated before returning.
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class Wait(object):
@@ -34,7 +33,7 @@ class Wait(object):
         - handles loading of traits
     """
 
-    def __init__(self, timeout, poll_frequency=POLL_FREQUENCY, ignored_exceptions=None):
+    def __init__(self, timeout, poll_frequency=POLL_FREQUENCY, ignored_exceptions=None, logger=None):
         self._timeout = timeout
         self._poll = poll_frequency
         self._driver = None
@@ -67,10 +66,10 @@ class Wait(object):
                 elif type(value) is not bool and value is not None:
                     return value
                 else:
-                    logger.info("#" + str(count) + " - wait until " + condition_description)  # pragma: no cover
+                    logger.debug("#" + str(count) + " - wait until " + condition_description)  # pragma: no cover
             except self._ignored_exceptions as ex:
-                logger.info("Captured {0} : {1}".format(str(ex.__class__).replace("<type '", "").replace("'>", ""),
-                                                        str(ex)))  # pragma: no cover
+                logger.debug("Captured {0} : {1}".format(str(ex.__class__).replace("<type '", "").replace("'>", ""),
+                                                         str(ex)))  # pragma: no cover
             time.sleep(self._poll)
             count += 1
             if time.time() > end_time:  # pragma: no cover
@@ -78,7 +77,7 @@ class Wait(object):
         raise TimeoutException(
             msg="condition <" + condition_description + "> was not true after " + str(self._timeout) + " seconds.")
 
-    def until_traits_are_present(self, traits):
+    def until_traits_are_present(self, element_with_traits):
         """
         Waits until all traits are present.
         If any of the traits is still not present after timeout, raises a TimeoutException.
@@ -89,15 +88,15 @@ class Wait(object):
         while True:
             missing_traits_descriptions = []
             try:
-                missing_traits_descriptions = evaluate_traits(traits)
+                missing_traits_descriptions = element_with_traits.evaluate_traits()
                 if len(missing_traits_descriptions) == 0:
                     return True
                 else:
                     logger.debug("#{0} - wait until all traits are present: <{1}>".format(str(count), '> <'.join(
                         missing_traits_descriptions)))
             except self._ignored_exceptions as ex:  # pragma: no cover
-                logger.info("Captured {0}: {1}".format(str(ex.__class__).replace("<type '", "").replace("'>", ""),
-                                                       str(ex)))  # pragma: no cover
+                logger.debug("Captured {0}: {1}".format(str(ex.__class__).replace("<type '", "").replace("'>", ""),
+                                                        str(ex)))  # pragma: no cover
                 pass  # pragma: no cover
             time.sleep(self._poll)
             count += 1

@@ -39,3 +39,23 @@ class ElementWithTraitsTest(unittest.TestCase):
         element = ElementWithTraits('an_element')
         assert_that(calling(element.wait_until_loaded).with_args(1, 0.5),
                     raises(IllegalStateException))
+
+    def test_lazy_evaluation(self):
+        element = get_element_with_traits_and_lazy_evaluation(True)
+
+        assert_that(element.evaluate_traits(), equal_to(['never true #1']))
+
+    def test_eager_evaluation(self):
+        element = get_element_with_traits_and_lazy_evaluation(False)
+
+        assert_that(element.evaluate_traits(), equal_to(['never true #1', 'never true #2']))
+
+
+def get_element_with_traits_and_lazy_evaluation(value):
+        an_element = ElementWithTraits('an element')
+        if not value:
+            an_element.with_eager_evaluation()
+        an_element.add_trait(lambda: False, 'never true #1')
+        an_element.add_trait(lambda: False, 'never true #2')
+
+        return an_element

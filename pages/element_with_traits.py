@@ -13,15 +13,13 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
-import logging
 
 from selenium.common.exceptions import StaleElementReferenceException
 
 from pages.exceptions import IllegalStateException
-from pages.traits import Trait, evaluate_traits
+from pages.traits import Trait
 from pages.wait.wait import Wait
 
-logger = logging.getLogger()
 
 DEFAULT_POLLING_TIME = 0.5
 DEFAULT_TIMEOUT = 25
@@ -37,20 +35,40 @@ class ElementWithTraits(object):
         self.traits = []
         self.timeout = DEFAULT_TIMEOUT
         self.polling_time = DEFAULT_POLLING_TIME
+        self.traits_eager_evaluation = False
 
     def add_trait(self, condition, description):
         self.traits.append(Trait(condition, description))
         return self
 
+    def with_eager_evaluation(self):
+        self.traits_eager_evaluation = True
+
     def wait_until_loaded(self, timeout=DEFAULT_TIMEOUT, polling_time=DEFAULT_POLLING_TIME):
         self.timeout = timeout
         self.polling_time = polling_time
-        wait = Wait(self.timeout, self.polling_time).with_ignored_exceptions(StaleElementReferenceException)
+        wait = Wait(self.timeout, self.polling_time)\
+            .with_ignored_exceptions(StaleElementReferenceException)
         if len(self.traits) == 0:
             raise IllegalStateException("Element '{0}' has no traits".format(self.name))
         else:
-            wait.until_traits_are_present(self.traits)
+            wait.until_traits_are_present(self)
             return self
 
     def has_all_traits(self):
-        return len(evaluate_traits(self.traits)) == 0
+        return len(self.evaluate_traits()) == 0
+
+    def evaluate_traits(self):
+        """
+        Evaluates traits and returns a list containing the description of traits which are not true.
+        Notice that if LAZY_EVALUATION is set to False all traits are evaluated before returning. Use this option
+        only for debugging purposes.
+        """
+        return_value = []
+        for trait in self.traits:
+            if not trait.condition():
+                if not self.traits_eager_evaluation:
+                    return [trait.description]
+                else:
+                    return_value.append(trait.description)
+        return return_value

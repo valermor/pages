@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
-from selenium.webdriver.common.by import By
 
 from pages.element_with_language import ElementWithLanguage
 from pages.ui_component import UIComponent
@@ -56,19 +55,8 @@ class Table(UIComponent, ElementWithLanguage):
                     index, item in self._enumerate_table_elements(self.locate())]
 
     def _enumerate_table_elements(self, table):
-        return enumerate(self._find_by_locator_in_scope(table))
-
-    def _find_by_locator_in_scope(self, scope_element):
-        by = self._item_relative_locator[0]
-        locator = self._item_relative_locator[1]
-        if by == By.ID:
-            return scope_element.find_elements_by_id(locator)  # pragma: no cover
-        elif by == By.XPATH:
-            return scope_element.find_elements_by_xpath(locator)
-        elif by == By.CSS_SELECTOR:  # pragma: no cover
-            return scope_element.find_elements_by_css_selector(locator)  # pragma: no cover
-        elif by == By.CLASS_NAME:  # pragma: no cover
-            return scope_element.find_elements_by_class_name(locator)  # pragma: no cover
+        by, locator = self._item_relative_locator
+        return enumerate(table.find_elements(by=by, value=locator))
 
     def _item_has_language(self):
         return issubclass(self._item_class, ElementWithLanguage)
