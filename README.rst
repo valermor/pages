@@ -352,8 +352,9 @@ In order to turn on logging generated inside the library you can rely on root lo
 To turn on logging from your application code, for instance:
 
 .. code:: python
-logging.getLogger('pages').setLevel(logging.DEBUG)
-logging.basicConfig(level=logging.INFO)
+
+     logging.getLogger('pages').setLevel(logging.DEBUG)
+     logging.basicConfig(level=logging.INFO)
 
 This will set log level to DEBUG.
 
