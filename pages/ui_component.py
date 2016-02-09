@@ -38,7 +38,7 @@ class UIComponent(ElementWithTraits):
         ElementWithTraits.__init__(self, name)
         self.driver = driver
         self.__locator = locator
-        self.__web_element = None
+        self._web_element = None
         self.__cache = False
 
     def from_web_element(self, web_element):
@@ -50,7 +50,7 @@ class UIComponent(ElementWithTraits):
         """
         if isinstance(web_element, WebElement) is not True:
             raise TypeError("web_element parameter is not of type WebElement.")
-        self.__web_element = web_element
+        self._web_element = web_element
         return self
 
     def cache(self):
@@ -71,8 +71,8 @@ class UIComponent(ElementWithTraits):
             Returns a WebElement object.
             It also caches the element if caching has been set through cache().
         """
-        if not self.__web_element:
-            return self.__web_element
+        if self._web_element:
+            return self._web_element
         else:
             locator_type, locator_value = self.__locator
             element = self.driver.find_element(by=locator_type, value=locator_value)
@@ -110,4 +110,4 @@ class UIComponent(ElementWithTraits):
 
     def _cache_web_element(self, element):
         if self.__cache is True:
-            self.__web_element = element
+            self._web_element = element
