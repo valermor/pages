@@ -220,7 +220,7 @@ and results in a page load has to return a page object of the target page.
 The simplest case is load() itself.
 
 The benefit of building a page from the Page class is that, after proper
-definition of traits, we can rely on wait\_until\_loaded() to reliably
+definition of traits, we can rely on wait\_until\_loaded() to
 pause the test execution *just enough* to allow the page to load.
 
 .. code:: python
@@ -279,9 +279,9 @@ Again, we will build the test top-down.
 
         def test_can_get_table_elements(self):
             sample_page = SamplePage(self.driver).load().wait_until_loaded()
-            first_table_raw_values = sample_page.read_first_table_raw()
+            first_table_row_values = sample_page.read_first_table_row()
 
-            assert_that(first_table_raw_values, equal_to(EXPECTED_LABEL_LIST))
+            assert_that(first_table_row_values, equal_to(EXPECTED_LABEL_LIST))
 
 SamplePage is a page object class which contains a table as a component.
 We can start by writing the table. The Table class (available in
@@ -292,7 +292,7 @@ pages.standard\_components) makes this simple.
     class SampleTable(Table):
 
         def __init__(self, driver):
-            super(SampleTable, self).__init__(driver, 'sample table', [By.XPATH, './tbody/tr'], TableRow, 'raw',
+            super(SampleTable, self).__init__(driver, 'sample table', [By.XPATH, './tbody/tr'], TableRow, 'row',
                                               [By.XPATH, '//table'])
 
 SampleTable extends Table which in turn extends UIComponent.
@@ -327,12 +327,12 @@ Finally, we can define SamplePage.
             self.driver.get('http://the-internet.herokuapp.com/challenging_dom')
             return self
 
-        def read_first_table_raw(self):
-            table_raws = SampleTable(self.driver).get_items()
-            return [i for i in table_raws[0].values()]
+        def read_first_table_row(self):
+            table_rows = SampleTable(self.driver).get_items()
+            return [i for i in table_rows[0].values()]
 
 One thing to notice here is that the table object is created afresh
-every time read\_first\_table\_raw() is called. While this makes sense
+every time read\_first\_table\_row() is called. While this makes sense
 in most cases, as the content of the page may change dynamically after
 loading (this is often the case for tables), in this case inspection of
 the Table class tells us that calling \_\_init\_\_() does not result in
@@ -352,9 +352,8 @@ In order to turn on logging generated inside the library you can rely on root lo
 To turn on logging from your application code, for instance:
 
 .. code:: python
-
-     logging.getLogger('pages').setLevel(logging.DEBUG)
-     logging.basicConfig(level=logging.INFO)
+logging.getLogger('pages').setLevel(logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 This will set log level to DEBUG.
 
@@ -375,6 +374,12 @@ License
 =======
 
 *pages* is licensed under the Apache Software License 2.0 provision.
+
+Author
+=======
+
+`Valerio Morsella <https://github.com/valermor>`__
+
 
 .. |BuildStatus| image:: https://travis-ci.org/Skyscanner/pages.svg
    :target: https://travis-ci.org/Skyscanner/pages

@@ -40,9 +40,9 @@ class SampleTableTest(unittest.TestCase):
 
     def test_can_get_table_elements(self):
         sample_page = SamplePage(self.driver).load().wait_until_loaded()
-        first_table_raw_values = sample_page.read_first_table_raw()
+        first_table_row_values = sample_page.read_first_table_row()
 
-        assert_that(first_table_raw_values, equal_to(EXPECTED_LABEL_LIST))
+        assert_that(first_table_row_values, equal_to(EXPECTED_LABEL_LIST))
 
 
 class SamplePage(Page):
@@ -55,15 +55,15 @@ class SamplePage(Page):
         self.driver.get('http://the-internet.herokuapp.com/challenging_dom')
         return self
 
-    def read_first_table_raw(self):
-        table_raws = SampleTable(self.driver).get_items()
-        return [i for i in table_raws[0].values()]
+    def read_first_table_row(self):
+        table_rows = SampleTable(self.driver).get_items()
+        return [i for i in table_rows[0].values()]
 
 
 class SampleTable(Table):
 
     def __init__(self, driver):
-        super(SampleTable, self).__init__(driver, 'sample table', [By.XPATH, './tbody/tr'], TableRow, 'raw',
+        super(SampleTable, self).__init__(driver, 'sample table', [By.XPATH, './tbody/tr'], TableRow, 'row',
                                           [By.XPATH, '//table'])
 
 

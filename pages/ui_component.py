@@ -71,7 +71,7 @@ class UIComponent(ElementWithTraits):
             Returns a WebElement object.
             It also caches the element if caching has been set through cache().
         """
-        if self.__web_element is not None:
+        if not self.__web_element:
             return self.__web_element
         else:
             locator_type, locator_value = self.__locator

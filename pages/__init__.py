@@ -27,4 +27,4 @@ except ImportError:  # pragma: no cover
 logging.getLogger(__name__).addHandler(NullHandler())
 
 # Set the version of the library here.
-__version__ = "0.1.3"
+__version__ = "1.0.0"

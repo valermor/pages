@@ -26,11 +26,11 @@ logger = logging.getLogger(__name__)
 
 class Wait(object):
     """
-        Re-write of Selenium WebDriverWait to allow for:
+        Wait utils insipired to Selenium WebDriverWait. Main features are:
         - better logging and debugging of failing conditions
         - conditions not containing driver as parameter
-        - does not need to pass a driver instance
-        - handles loading of traits
+        - until_condition() takes a callable condition which does not need to contain driver
+        - until_traits_are_present() which is
     """
 
     def __init__(self, timeout, poll_frequency=POLL_FREQUENCY, ignored_exceptions=None, logger=None):

@@ -17,6 +17,7 @@ from pages.ui_component import UIComponent
 
 
 class Image(UIComponent):
+
     def __init__(self, driver, name, locator=None):
         UIComponent.__init__(self, driver, name, locator)
 
